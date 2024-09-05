@@ -1,0 +1,52 @@
+.center-form-div {
+    width: 500px;
+    border: 1px solid rgba(255, 255, 255, 0.322);
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.729);
+    box-sizing: border-box;
+    margin: auto;
+}
+
+.text-field {
+    width: 100%;
+    border: 1px solid rgb(215, 174, 174);
+    border-left: 5px solid white;
+    outline: 0;
+    color: white;
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 10px 5px;
+    background-color: inherit;
+    display: block;
+    box-sizing: border-box;
+    margin-top: 20px;
+}
+
+.file-field {
+    border-radius: 5px;
+    width: 100%;
+    padding: 10px 5px;
+    border: 1px solid rgb(215, 174, 174);
+    border-left: 5px solid white;
+    box-sizing: border-box;
+}
+
+.center-form-div button {
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 20px;
+    background: rgb(78, 38, 38);
+    border: 1px solid rgba(255, 255, 255, 0.509);
+    border-radius: 50px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+}
+
+.center-form-div button:hover {
+    background-color: rgb(107, 66, 66);
+}
+.loginform {
+    margin-top: 100px;
+}

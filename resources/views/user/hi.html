@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+        body {
+            background-image: url('../Images/Black-BackGround.gif');
+            background-repeat: repeat;
+        }
+    </style>
+</head>
+<script>
+    function saveScrollPositions(theForm) {
+        if (theForm) {
+            var scrolly = typeof window.pageYOffset !== 'undefined' ? window.pageYOffset : document.documentElement.scrollTop;
+            var scrollx = typeof window.pageXOffset !== 'undefined' ? window.pageXOffset : document.documentElement.scrollLeft;
+            theForm.scrollx.value = scrollx;
+            theForm.scrolly.value = scrolly;
+        }
+    }
+</script>
+<form action="enroll.php" name="enrollment" method="post" onsubmit="return saveScrollPositions(this);">
+    <input type="hidden" name="scrollx" id="scrollx" value="0" />
+    <input type="hidden" name="scrolly" id="scrolly" value="0" />
+    <!-- Other form elements go here -->
+</form>
+</html>
