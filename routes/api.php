@@ -4,12 +4,13 @@ use GuzzleHttp\Middleware;
 use Spatie\FlareClient\Api;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ApiChatController;
 use App\Http\Controllers\Api\V1\ApiAuthController;
+use App\Http\Controllers\Api\V1\ApiChatController;
 use App\Http\Controllers\Api\V1\ApiPostController;
 use App\Http\Controllers\Api\V1\ApiUserController;
 use App\Http\Controllers\Api\V1\ApiCommentController;
-use App\Http\Controllers\Api\V1\ApiChatController as V1ApiChatController;
+use App\Http\Controllers\Api\V1\ApiMessageController;
+use App\Http\Controllers\Api\V1\ApiMessagesController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -26,6 +27,9 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::get('v1/user/{user}', [ApiUserController::class, 'show']);
     Route::post('v1/follow/{user}', [ApiUserController::class, 'follow']);
     Route::post('v1/unfollow/{user}', [ApiUserController::class, 'unfollow']);
-    Route::get('v1/chats', [V1ApiChatController::class, 'index']);
+    Route::get('v1/chats', [ApiChatController::class, 'index']);
+    Route::get('v1/chats/{chat}', [ApiChatController::class, 'show']);
+    Route::post('v1/messages', [ApiMessageController::class, 'store']);
+    Route::post('v1/chats', [ApiChatController::class, 'store']);
 });
 Route::middleware(['web', 'auth:sanctum'])->post('/logout', [ApiAuthController::class, 'logout']);

@@ -14,11 +14,26 @@ use App\Http\Resources\V1\UserCollection;
 class ApiUserController extends Controller
 {
     public function index(Request $request) {
-        return new UserCollection(User::all()->load('followers'));;
+        if ($request->input('followers')) {
+            return new UserCollection(User::all()->load('followers'));;
+        }
+        return new UserCollection(User::all());;
     }
 
-    public function show(User $user) {
-        return new UserResource($user);
+    public function show(User $user, Request $request) {
+        $chat_common = null;
+        
+        foreach ($user->chats as $chat) {
+            if ($chat->users->where('id', auth()->user()->id)->first()) {
+                $chat_common = $chat->id;
+                break;
+            }
+        }
+        
+        return [
+            'user' => new UserResource($user),
+            'chatCommon' => $chat_common,
+        ];
     }
     
     public function register(RegisterRequest $request)

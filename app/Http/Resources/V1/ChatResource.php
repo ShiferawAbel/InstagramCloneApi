@@ -17,7 +17,10 @@ class ChatResource extends JsonResource
         return [
             'id' => $this->id,
             'type' => $this->type,
-            'users' => new UserCollection($this->users) 
+            'unread' => $this->unread,
+            'users' => new UserCollection($this->users),
+            'messages' => MessageResource::collection($this->whenLoaded('messages')),
+            'lastMessage' => new MessageResource($this->messages()->latest()->with('user')->first()),
         ];
     }
 }

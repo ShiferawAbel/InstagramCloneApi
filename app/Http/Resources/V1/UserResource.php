@@ -21,7 +21,7 @@ class UserResource extends JsonResource
             'followerNumber' => $this->follower_number,
             'followingNumber' => $this->following_number,
             'posts' => PostResource::collection($this->whenLoaded('posts')),
-            'followers' => $this->followers,
+            'followers' => UserResource::collection($this->whenLoaded('followers')),
         ];
     }
 }
