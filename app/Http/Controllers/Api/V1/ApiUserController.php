@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\V1\UserResource;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\V1\UserCollection;
 
 class ApiUserController extends Controller
@@ -31,7 +32,7 @@ class ApiUserController extends Controller
         }
         
         return [
-            'user' => new UserResource($user),
+            'user' => new UserResource($user->load('followers', 'following')),
             'chatCommon' => $chat_common,
         ];
     }
@@ -91,4 +92,15 @@ class ApiUserController extends Controller
         }
     }
 
+    public function update(UpdateUserRequest $request, User $user)
+    {
+        $user->update([
+            'name' => $request->name,
+            'user_name' => $request->user_name,
+            'email' => $request->email,
+        ]);
+        return [
+            'succes'
+        ];
+    }
 }

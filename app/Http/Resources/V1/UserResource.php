@@ -17,11 +17,14 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'profileUrl' => 'http://127.0.0.1:8000/storage/' . $this->profile_url,
+            'name' => $this->name,
+            'email' => $this->email,
             'userName' => $this->user_name,
             'followerNumber' => $this->follower_number,
             'followingNumber' => $this->following_number,
             'posts' => PostResource::collection($this->whenLoaded('posts')),
             'followers' => UserResource::collection($this->whenLoaded('followers')),
+            'following' => UserResource::collection($this->whenLoaded('following')),
         ];
     }
 }

@@ -61,6 +61,10 @@ class User extends Authenticatable
     public function followers() {
         return $this->belongsToMany(User::class, 'follower_user','user_id', 'follower_id');
     }
+    
+    public function following() {
+        return $this->belongsToMany(User::class, 'follower_user','follower_id', 'user_id');
+    }
 
     public function chats() {
         return $this->belongsToMany(Chat::class);
@@ -68,5 +72,10 @@ class User extends Authenticatable
 
     public function comments() {
         return $this->hasMany(Comment::class);
+    }
+
+    public function liked_posts()
+    {
+        return $this->belongsToMany(Post::class);
     }
 }

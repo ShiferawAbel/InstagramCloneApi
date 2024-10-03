@@ -25,11 +25,16 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::get('v1/users', [ApiUserController::class, 'index']);
     Route::get('v1/user', [ApiUserController::class, 'auth_profile']);
     Route::get('v1/user/{user}', [ApiUserController::class, 'show']);
+    Route::post('v1/users/{user}', [ApiUserController::class, 'update']);
     Route::post('v1/follow/{user}', [ApiUserController::class, 'follow']);
     Route::post('v1/unfollow/{user}', [ApiUserController::class, 'unfollow']);
     Route::get('v1/chats', [ApiChatController::class, 'index']);
     Route::get('v1/chats/{chat}', [ApiChatController::class, 'show']);
     Route::post('v1/messages', [ApiMessageController::class, 'store']);
     Route::post('v1/chats', [ApiChatController::class, 'store']);
+    
+    Route::post('v1/posts/{post}/like', [ApiPostController::class, 'like_post']);
+    Route::post('v1/posts/{post}/remove-like', [ApiPostController::class, 'remove_like']);
+    
 });
 Route::middleware(['web', 'auth:sanctum'])->post('/logout', [ApiAuthController::class, 'logout']);
