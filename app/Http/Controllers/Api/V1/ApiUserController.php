@@ -25,11 +25,11 @@ class ApiUserController extends Controller
         }
         return new UserCollection(User::all());;
     }
-    
+
     public function update_profile(UpdateProfileRequest $request)
     {
         if ($request->hasFile('profile_url')) {
-            
+
             $file = $request->file('profile_url');
             $path = $file->store('profile', 'public');
             $user = User::find(auth()->user()->id);
@@ -54,7 +54,13 @@ class ApiUserController extends Controller
         }
 
         return [
-            'user' => new UserResource($user->load('posts', 'followers', 'following')),
+            'user' => new UserResource($user->load(
+                'posts',
+                'followers.followers',
+                'followers.following',
+                'following.followers',
+                'following.following'
+            )),
             'chatCommon' => $chat_common,
         ];
     }
@@ -108,7 +114,7 @@ class ApiUserController extends Controller
 
             if ($request->input('posts')) {
                 $user = User::find(auth()->user()->id);
-                return ['user' => new UserResource($user->load('posts'))];
+                return ['user' => new UserResource($user->load('posts', 'followers.followers', 'followers.following', 'following.followers', 'following.following'))];
             }
 
             $user = auth()->user()->load('notes');
