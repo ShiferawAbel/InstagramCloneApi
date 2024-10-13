@@ -25,6 +25,7 @@ class UserResource extends JsonResource
             'posts' => PostResource::collection($this->whenLoaded('posts')),
             'followers' => UserResource::collection($this->whenLoaded('followers')),
             'following' => UserResource::collection($this->whenLoaded('following')),
+            'note' => $this->whenLoaded('notes'),
         ];
     }
 }

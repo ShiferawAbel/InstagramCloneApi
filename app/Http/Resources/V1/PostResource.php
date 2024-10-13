@@ -20,7 +20,7 @@ class PostResource extends JsonResource
             'uploadedBy' => $this->uploaded_by,
             'caption' => $this->caption,
             'fileUrl' => 'http://127.0.0.1:8000/storage/' . $this->file_url,
-            'likedBy' => UserResource::collection($this->liked_by),
+            'likedBy' => UserResource::collection($this->liked_by->load('followers')),
             'likedByUser' => $this->liked_by->contains(auth()->user()->id),
             'user'=>new UserResource($this->whenLoaded('user')),
             'postedAt'=>$this->created_at,

@@ -16,10 +16,9 @@ class ApiPostController extends Controller
     public function index(Request $request) {
         
         if($request['user']) {
-            return new PostCollection(Post::orderBY('created_at', 'desc')->with('user', 'liked_by')->get());
+            return new PostCollection(Post::orderBY('created_at', 'desc')->with('user.followers', 'liked_by')->get());
         }
         return (new PostCollection(Post::all()));
-        // return 'hi';
     }
 
     public function postComments (Post $post) {
@@ -59,5 +58,17 @@ class ApiPostController extends Controller
         return [
             'success'
         ];
+    }
+
+    public function show(Post $post)
+    {
+        // print($post->load('user'));
+        return new PostResource($post->load('user'));
+    }
+
+    public function destroy(Post $post)
+    {
+        $post->delete();
+        return 'success';
     }
 }
