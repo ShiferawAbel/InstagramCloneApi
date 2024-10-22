@@ -88,13 +88,18 @@ class ApiUserController extends Controller
 
     public function follow(User $user)
     {
-        $user->followers()->attach(auth()->user());
-        $user->follower_number = $user->follower_number + 1;
-        auth()->user()->following_number = auth()->user()->following_number + 1;
-        auth()->user()->save();
-        $user->save();
-
-        return response('success');
+        $user_already_follows = $user->followers()->where('follower_id', auth()->user()->id)->exists();
+        print($user_already_follows);
+        if (!$user_already_follows) {
+            $user->followers()->attach(auth()->user());
+            $user->follower_number = $user->follower_number + 1;
+            auth()->user()->following_number = auth()->user()->following_number + 1;
+            auth()->user()->save();
+            $user->save();
+    
+            return response('success');
+            # code...
+        }
     }
 
     public function unfollow(User $user)
