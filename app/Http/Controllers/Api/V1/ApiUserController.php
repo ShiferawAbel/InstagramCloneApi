@@ -20,10 +20,22 @@ class ApiUserController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->input('followers')) {
-            return new UserCollection(User::all()->load('followers'));;
+        if ($request->input('searchQuery')) {
+            if ($request->input('followers')) {
+                return new UserCollection(
+                    User::where('user_name', 'like', '%' . $request->input('searchQuery') . '%')
+                        ->with('followers', 'posts')
+                        ->get()
+                );                
+            }
+            return new UserCollection(User::where('user_name', 'like', '%' . $request->input('searchQuery') . '%')
+                ->get());
         }
-        return new UserCollection(User::all());;
+
+        if ($request->input('followers')) {
+            return new UserCollection(User::with('followers', 'posts')->get());
+        }
+        return new UserCollection(User::all());
     }
 
     public function update_profile(UpdateProfileRequest $request)
@@ -96,7 +108,7 @@ class ApiUserController extends Controller
             auth()->user()->following_number = auth()->user()->following_number + 1;
             auth()->user()->save();
             $user->save();
-    
+
             return response('success');
             # code...
         }
